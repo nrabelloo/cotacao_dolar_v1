@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Projeto REST - Lista e Cotações</title>
+</head>
+<body>
+    
+    <h1>Histórico de Cotação do Dólar</h1>
+
+    <label for="quantidadedeDias">Número de dias:</label>
+    <input id="quantidadeDias" type="number" max="10" value="5" min="1">
+
+    <button id="btnAtualizar">Buscar Histórico</button>
+    
+    <hr />
+
+    <h3>Resultados</h3>
+    <ul id="listaCotacoes"></ul>
+
+    <!-- Colocando o javaScript dentro do HTML -->
+    <script>
+        async function buscarCotacao() {
+            const dias = document.getElementById('quantidadeDias').value;
+            const lista = document.getElementById('listaCotacoes');
+            lista.innerHTML = "carregando..." + dias;
+
+            const url = `https://economia.awesomeapi.com.br/json/daily/USD-BRL/${dias}`;
+
+            try {
+                const response = await fetch(url);
+                const dados = await response.json();
+
+                //limpar o texto de carregamento
+                lista.innerHTML = '';
+
+                //Itere sobre cada item do resultset
+                //function nome(param) {instrucoes} -> pode ser chamada
+                //(callback, parametros) => {instrucoes} -> só uma execusao
+                dados.forEach(() => {
+                    const li = document.createElement('li');
+                    const valor = parseFloat(item.bid).toFixed(2);
+                    const data = new Date(item.timestamp * 1000).toLocaleDateString('pt-BR');
+
+                    li.innerText = `Dia ${index + 1} (${data}): R$ ${valor};`
+                    /* console.log(li); */
+                    lista.appendChild(li);
+                });
+            }
+            catch {}
+        }
+
+        document.getElementById('btnAtualizar').addEventListener('click', buscarCotacao);
+    </script>
+
+</body>
+</html>

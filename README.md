@@ -1,2 +1,2 @@
 # cotacao_dolar_v1
-Cotação
+Histórico de Cotação do Dólar
