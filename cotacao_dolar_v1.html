@@ -48,7 +48,10 @@
                     lista.appendChild(li);
                 });
             }
-            catch {}
+            catch (error) {
+                console.error("Erro da requisição:", error);
+                lista.innerHTML = "<li>Erro ao buscar dados</li>";
+            }
         }
 
         document.getElementById('btnAtualizar').addEventListener('click', buscarCotacao);
